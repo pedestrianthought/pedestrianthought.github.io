@@ -1,0 +1,22 @@
+{% comment %}
+  The closing table of a highlight: official website, opening hours, tips.
+  Any row whose field is missing from the highlight's front matter is left out.
+  `tips` can be a single string or a YAML list.
+{% endcomment %}
+{% assign h = include.highlight %}
+{% if h.website or h.hours or h.tips %}
+<table class="highlight__facts">
+  <tbody>
+    {% if h.website %}
+    <tr><th scope="row">Official website</th><td><a href="{{ h.website }}" target="_blank" rel="noopener">{{ h.website | remove: "https://" | remove: "http://" | remove: "www." | split: "/" | first }}</a></td></tr>
+    {% endif %}
+    {% if h.hours %}
+    <tr><th scope="row">Opening hours</th><td>{{ h.hours }}</td></tr>
+    {% endif %}
+    {% if h.tips %}
+    {% assign tip_list = h.tips | join: "|" | split: "|" %}
+    <tr><th scope="row">Tips</th><td>{% if tip_list.size > 1 %}<ul>{% for tip in tip_list %}<li>{{ tip }}</li>{% endfor %}</ul>{% else %}{{ tip_list.first }}{% endif %}</td></tr>
+    {% endif %}
+  </tbody>
+</table>
+{% endif %}

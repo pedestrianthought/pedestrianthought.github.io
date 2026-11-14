@@ -1,0 +1,82 @@
+---
+layout: default
+---
+{% comment %}
+  City page layout for Pedestrian Thought.
+
+  Front matter on a city page (e.g. cities/tallinn.md):
+    title:      "Tallinn"                      (must match `city:` in the highlight files)
+    layout:     city
+    graphic:    /assets/images/cities/tallinn.svg   (shown beside the name)
+    map:        https://www.google.com/maps/d/embed?mid=...   (optional; just the src URL of the Google
+                                 My Maps embed. Shown under the city text, full width, resizes on mobile)
+    photo_layout: row | stack   (optional; default for this city's photos, row if omitted.
+                                 A highlight's own photo_layout overrides it)
+
+  Highlights live in _highlights/*.md. They are listed in the order of
+  _data/subjects.yml, which also supplies each subject's icon.
+{% endcomment %}
+{% assign city_highlights = site.highlights | where: "city", page.title %}
+
+<div id="main" role="main">
+  <article class="city">
+
+    <header class="city__header">
+      <h1 class="city__name">{{ page.title }}</h1>
+      {% if page.graphic %}<img class="city__graphic" src="{{ page.graphic | relative_url }}" alt="" aria-hidden="true">{% endif %}
+    </header>
+
+    <section class="city__intro">
+      {{ content }}
+    </section>
+
+    {% if page.map %}
+    <div class="city__map" id="city-map">
+      <iframe src="{{ page.map }}" title="Map of {{ page.title }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      <span class="city__map-hint">Click the map to move and zoom it</span>
+    </div>
+    <script>
+      /* The map ignores the mouse wheel and touch until clicked, so scrolling the page doesn't zoom the map. */
+      (function () {
+        var box = document.getElementById("city-map");
+        if (!box) return;
+        box.addEventListener("click", function () { box.classList.add("is-active"); });
+        box.addEventListener("mouseleave", function () { box.classList.remove("is-active"); });
+        document.addEventListener("click", function (e) { if (!box.contains(e.target)) box.classList.remove("is-active"); });
+        document.addEventListener("touchstart", function (e) { if (!box.contains(e.target)) box.classList.remove("is-active"); }, { passive: true });
+      })();
+    </script>
+    {% endif %}
+
+    {% if city_highlights.size > 0 %}
+
+    {% comment %} Short list: icon, linked name, subject label. {% endcomment %}
+    <ul class="highlight-index">
+      {% for subject in site.data.subjects %}
+        {% assign items = city_highlights | where: "subject", subject.name %}
+        {% for h in items %}
+        <li><i class="{{ subject.icon }}" aria-hidden="true"></i><a href="#{{ h.title | slugify: "latin" }}">{{ h.title }}</a><span class="highlight-index__subject">{{ subject.name }}</span></li>
+        {% endfor %}
+      {% endfor %}
+    </ul>
+
+    {% comment %} Detail: every highlight, icon and title, photos and text, then the facts table. {% endcomment %}
+    <div class="city__details">
+      {% for subject in site.data.subjects %}
+        {% assign items = city_highlights | where: "subject", subject.name %}
+        {% for h in items %}
+        {% assign photo_layout = h.photo_layout | default: page.photo_layout | default: "row" %}
+        <article class="highlight highlight--photos-{{ photo_layout }}" id="{{ h.title | slugify: "latin" }}">
+          <h2 class="highlight__title"><i class="{{ subject.icon }}" aria-hidden="true"></i><span>{{ h.title }}</span></h2>
+          <div class="highlight__body">
+            {{ h.content }}
+          </div>
+          {% include highlight-facts.html highlight=h %}
+        </article>
+        {% endfor %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+  </article>
+</div>

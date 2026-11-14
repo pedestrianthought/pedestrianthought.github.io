@@ -1,0 +1,58 @@
+# Site settings for Pedestrian Thought
+# Restart `bundle exec jekyll serve` after editing this file.
+
+remote_theme: "mmistakes/minimal-mistakes"
+minimal_mistakes_skin: "default"
+
+title: "Pedestrian Thought"
+description: "Exploring on foot through thought provoking sites of ancient ruins, cathedrals, art and nature."
+url: "https://pedestrianthought.github.io"
+baseurl: ""
+repository: "pedestrianthought/pedestrianthought.github.io"
+locale: "en-AU"
+
+author:
+  name: "pedestrianthought"
+  bio: "Exploring on foot through thought provoking sites of ancient ruins, cathedrals, art and nature." 
+
+github_username: pedestrianthought
+
+paginate: 8
+paginate_path: /page:num/
+
+plugins:
+  - jekyll-remote-theme
+  - jekyll-include-cache
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+
+markdown: kramdown
+permalink: /:categories/:title/
+timezone: Australia/Sydney
+
+collections:
+  highlights:
+    output: false
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: false
+      read_time: true
+      share: false
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: false
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor

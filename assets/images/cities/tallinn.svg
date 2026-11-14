@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 100" role="img" aria-label="Stylised medieval skyline">
+  <!-- Placeholder graphic: replace with your own artwork or photo for Tallinn -->
+  <g fill="#6b4a2b">
+    <rect x="0" y="78" width="360" height="22"/>
+    <rect x="8" y="62" width="14" height="18"/><rect x="8" y="58" width="4" height="5"/><rect x="14" y="58" width="4" height="5"/>
+    <rect x="30" y="64" width="40" height="16"/>
+    <rect x="76" y="44" width="26" height="36"/><polygon points="72,44 89,12 106,44"/>
+    <rect x="112" y="60" width="38" height="20"/>
+    <rect x="158" y="30" width="16" height="50"/><polygon points="154,30 166,2 178,30"/>
+    <rect x="186" y="56" width="30" height="24"/><polygon points="184,56 201,38 218,56"/>
+    <rect x="226" y="46" width="24" height="34"/><polygon points="222,46 238,18 254,46"/>
+    <rect x="260" y="62" width="34" height="18"/>
+    <rect x="302" y="52" width="22" height="28"/><polygon points="298,52 313,26 328,52"/>
+    <rect x="336" y="64" width="16" height="16"/>
+  </g>
+  <g fill="#f1e2b8">
+    <rect x="85" y="56" width="5" height="9"/><rect x="163" y="46" width="4" height="9"/>
+    <rect x="234" y="58" width="5" height="9"/><rect x="309" y="62" width="5" height="9"/>
+  </g>
+</svg>

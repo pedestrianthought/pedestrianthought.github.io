@@ -1,0 +1,181 @@
+/* Pedestrian Thought: city, subject and top-level pages.
+
+   Photos in each highlight are laid out by photo_layout (row or stack); see the photo layouts section.
+
+   Colours are inherited from the theme; only the neutral greys below are set here. */
+
+:root {
+  --pt-rule: rgba(128, 128, 128, 0.4);   /* borders and dividing lines */
+  --pt-muted: #777;                      /* small grey labels */
+  --pt-th: rgba(0, 0, 0, 0.04);          /* table header cells */
+}
+
+/* ---------- city page ---------- */
+.city {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1rem 0 3rem;
+}
+.city a { color: inherit; }
+.city h1, .city h2, .city h3, .city h4 {
+  color: inherit;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.2;
+}
+
+.city__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.6rem;
+  margin-bottom: 1.2rem;
+  border-bottom: 2px solid var(--pt-rule);
+}
+.city__name { margin: 0; font-size: 2.4rem; }
+.city__graphic { height: 4.5rem; width: auto; max-width: 55%; margin: 0; }
+
+.city__intro { font-size: 1.05rem; line-height: 1.65; margin-bottom: 1.5rem; }
+
+/* the short list is followed by the detail, separated by a rule */
+.city__details {
+  margin-top: 1.8rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid var(--pt-rule);
+}
+
+/* ---------- a highlight ---------- */
+.highlight { margin: 0 0 2.2rem; scroll-margin-top: 1rem; }
+.highlight__title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 0.7rem;
+  font-size: 1.35rem;
+}
+.highlight__title i {
+  flex: 0 0 auto;
+  width: 1.4em;
+  text-align: center;
+  font-size: 0.95em;
+}
+.highlight__body > :first-child { margin-top: 0; }
+.highlight__body p { line-height: 1.65; }
+
+/* photos */
+.photos { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.9rem; }
+.photo { display: block; flex: 1 1 13rem; margin: 0; }   /* block: the theme makes figures flex, which puts captions beside the photo */
+.photo > a { display: block; }   /* the image link only, not links inside the caption */
+.photo img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 24rem;
+  margin: 0;
+  border-radius: 3px;
+}
+.photo figcaption {
+  width: auto;
+  margin-top: 0.3rem;
+  font-size: 0.82rem;
+  font-style: italic;
+}
+
+/* facts table: official website, opening hours, tips */
+.city .highlight__facts {
+  display: table;
+  width: 100%;
+  margin: 1rem 0 0;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+.city .highlight__facts th,
+.city .highlight__facts td {
+  padding: 0.5rem 0.8rem;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid var(--pt-rule);
+}
+.city .highlight__facts th {
+  width: 9.5rem;
+  white-space: nowrap;
+  background: var(--pt-th);
+}
+.city .highlight__facts ul { margin: 0; padding-left: 1.1rem; }
+
+/* ---------- map (Google My Maps embed under the city text) ---------- */
+.city__map { position: relative; max-width: 42rem; margin: 1.2rem 0 0; }   /* narrower than the text column; raise or remove max-width for a wider map */
+.city__map iframe { pointer-events: none; }               /* inactive until clicked */
+.city__map.is-active iframe { pointer-events: auto; }
+.city__map-hint {
+  position: absolute; right: 0.6rem; bottom: 0.6rem;
+  padding: 0.2rem 0.6rem; border-radius: 3px;
+  background: rgba(0, 0, 0, 0.65); color: #fff; font-size: 0.8rem;
+  pointer-events: none;
+}
+.city__map.is-active .city__map-hint { display: none; }
+/* width/height attributes on a pasted <iframe> are overridden, so a map pasted into the city text behaves the same */
+.city__map iframe,
+.city__intro iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  max-height: 80vh;
+  border: 0;
+  border-radius: 3px;
+}
+@media (max-width: 700px) { .city__map iframe, .city__intro iframe { aspect-ratio: 4 / 3; } }
+
+/* ---------- highlight lists (city, subject and top-level pages) ---------- */
+.highlight-index { list-style: none; margin: 0.5rem 0 0; padding: 0; }
+.highlight-index li { display: flex; align-items: baseline; gap: 0.6rem; margin: 0.4rem 0; line-height: 1.4; }
+.highlight-index i { flex: 0 0 auto; width: 1.4em; text-align: center; }
+.highlight-index__subject { color: var(--pt-muted); font-size: 0.85rem; }
+
+/* Custom icons that Font Awesome doesn't have. Drawn as masks, so they take the text
+   colour and size like the font icons. Use as: icon: "pt-icon pt-icon-ruins" in subjects.yml */
+.pt-icon {
+  display: inline-block;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask: var(--pt-icon) center / 1em 1em no-repeat;
+  mask: var(--pt-icon) center / 1em 1em no-repeat;
+}
+.pt-icon-ruins { --pt-icon: url("../images/icons/ruins.svg"); }
+
+/* Cities list: each city's graphic in place of the bullet */
+.highlight-index--cities li { align-items: center; margin: 0.6rem 0; }
+.highlight-index__graphic {
+  flex: 0 0 auto;
+  width: 6.5rem;
+  height: 1.9rem;
+  margin: 0;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* ---------- top-level page ---------- */
+.landing { max-width: 60rem; margin: 0 auto; padding: 1rem 0 3rem; }
+.landing__tagline { font-size: 1.15rem; font-style: italic; margin: 0 0 1.5rem; }
+
+/* highlight order: heading, then text, then photos, then the facts table.
+   The photos block is pushed after the text whatever order they are written in the highlight file. */
+.highlight__body { display: flex; flex-direction: column; }
+.highlight__body > * { min-width: 0; }
+.highlight__body .photos { order: 1; margin: 0.4rem 0 0; }
+
+/* ---------- photo layouts (set photo_layout on a highlight or on the city page) ---------- */
+/* row (default): photos side by side, wrapping. Rules above. */
+/* stack: photos one below the other */
+.highlight--photos-stack .photos { display: block; }
+.highlight--photos-stack .photo { margin: 0 0 0.8rem; }
+.highlight--photos-stack .photo img { max-height: 32rem; }
+
+/* ---------- small screens ---------- */
+@media (max-width: 700px) {
+  .city__name { font-size: 1.9rem; }
+  .city__graphic { height: 3.4rem; }
+  .city .highlight__facts th { white-space: normal; width: 6.5rem; }
+}

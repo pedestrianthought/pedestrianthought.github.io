@@ -1,0 +1,42 @@
+---
+layout: default
+---
+{% comment %}
+  Top-level page: the site tagline, any text from the page itself, then every
+  highlight from every city in the same format as the city and subject pages:
+  the subject's icon, the highlight name (linked to its city page) and the city.
+  Highlights follow the subject order in _data/subjects.yml.
+{% endcomment %}
+
+<div id="main" role="main">
+  <div class="landing">
+
+    {% if site.description %}<p class="landing__tagline">{{ site.description }}</p>{% endif %}
+
+    {% assign intro = content | strip %}
+    {% if intro != "" %}
+    <section class="landing__intro">
+      {{ content }}
+    </section>
+    {% endif %}
+
+    {% if site.highlights.size > 0 %}
+    <ul class="highlight-index">
+      {% for subject in site.data.subjects %}
+        {% assign items = site.highlights | where: "subject", subject.name %}
+        {% for h in items %}
+          {% assign city_page = site.pages | where: "layout", "city" | where: "title", h.city | first %}
+          <li>
+            <i class="{{ subject.icon }}" aria-hidden="true"></i>
+            {% if city_page %}<a href="{{ city_page.url | relative_url }}#{{ h.title | slugify: "latin" }}">{{ h.title }}</a>{% else %}{{ h.title }}{% endif %}
+            <span class="highlight-index__subject">{{ h.city }}</span>
+          </li>
+        {% endfor %}
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p><em>No highlights yet. Add a file to <code>_highlights/</code> and it will appear here.</em></p>
+    {% endif %}
+
+  </div>
+</div>

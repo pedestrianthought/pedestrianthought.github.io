@@ -1,0 +1,33 @@
+---
+layout: single
+---
+{% comment %}
+  Layout for subject pages (subjects/*.md).
+
+  A subject page sets two front matter values:
+    filter_field: subjects
+    filter_value: the subject's name, e.g. "Street art"
+                  (must match `subject:` in _highlights/*.md and _data/subjects.yml)
+
+  It lists that subject's highlights from every city: icon, highlight name
+  (linked to its city page) and city.
+{% endcomment %}
+
+{{ content }}
+
+{% assign subject_info = site.data.subjects | where: "name", page.filter_value | first %}
+{% assign subject_highlights = site.highlights | where: "subject", page.filter_value %}
+{% if subject_highlights.size > 0 %}
+<ul class="highlight-index">
+  {% for h in subject_highlights %}
+    {% assign city_page = site.pages | where: "layout", "city" | where: "title", h.city | first %}
+    <li>
+      {% if subject_info %}<i class="{{ subject_info.icon }}" aria-hidden="true"></i>{% endif %}
+      {% if city_page %}<a href="{{ city_page.url | relative_url }}#{{ h.title | slugify: "latin" }}">{{ h.title }}</a>{% else %}{{ h.title }}{% endif %}
+      <span class="highlight-index__subject">{{ h.city }}</span>
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p><em>No highlights yet. Add a file to <code>_highlights/</code> with <code>subject: "{{ page.filter_value }}"</code> and it will appear here.</em></p>
+{% endif %}

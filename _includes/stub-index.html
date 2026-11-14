@@ -1,0 +1,40 @@
+{% comment %}
+  Lists city or subject pages for the Cities and Subjects index pages.
+    {% include stub-index.html field="subjects" %}   pages with that filter_field
+    {% include stub-index.html layout="city" %}      pages using that layout
+    {% include stub-index.html field="subjects" %}   as above, with each subject's icon instead of a bullet
+    {% include stub-index.html layout="city" %}      with each city's graphic (the `graphic` front matter) instead of a bullet
+  New pages appear here automatically, so index pages never need editing.
+{% endcomment %}
+{% if include.layout %}
+  {% assign stubs = site.pages | where: "layout", include.layout | sort: "title" %}
+{% else %}
+  {% assign stubs = site.pages | where: "filter_field", include.field | sort: "title" %}
+{% endif %}
+{% if stubs.size > 0 %}
+  {% if include.field == "subjects" %}
+<ul class="highlight-index">
+    {% comment %} In the order and with the icons from _data/subjects.yml; a subject appears once it has a page in subjects/. {% endcomment %}
+    {% for subject in site.data.subjects %}
+      {% assign stub = stubs | where: "filter_value", subject.name | first %}
+      {% if stub %}
+  <li><i class="{{ subject.icon }}" aria-hidden="true"></i><a href="{{ stub.url | relative_url }}">{{ stub.title }}</a></li>
+      {% endif %}
+    {% endfor %}
+</ul>
+  {% elsif include.layout == "city" %}
+<ul class="highlight-index highlight-index--cities">
+    {% for stub in stubs %}
+  <li>{% if stub.graphic %}<img class="highlight-index__graphic" src="{{ stub.graphic | relative_url }}" alt="" aria-hidden="true">{% else %}<i class="fa-solid fa-city" aria-hidden="true"></i>{% endif %}<a href="{{ stub.url | relative_url }}">{{ stub.title }}</a></li>
+    {% endfor %}
+</ul>
+  {% else %}
+<ul>
+    {% for stub in stubs %}
+  <li><a href="{{ stub.url | relative_url }}">{{ stub.title }}</a></li>
+    {% endfor %}
+</ul>
+  {% endif %}
+{% else %}
+<p><em>Nothing here yet.</em></p>
+{% endif %}

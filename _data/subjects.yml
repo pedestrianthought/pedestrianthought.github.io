@@ -1,0 +1,23 @@
+# Subjects: display order on city, subject and top-level pages, and the small icon beside each.
+# `name` must match `subject:` in _highlights/*.md and `filter_value:` in subjects/*.md exactly.
+# Icons are Font Awesome Free (solid), already loaded by Minimal Mistakes: https://fontawesome.com/icons
+# To add a subject: add a block here, add a page in subjects/, then use the same name in your highlights.
+
+- name: "Architecture"
+  icon: "fa-solid fa-archway"
+- name: "Art galleries"
+  icon: "fa-solid fa-palette"
+- name: "Authors and philosophers"
+  icon: "fa-solid fa-feather-pointed"
+- name: "Monument"
+  icon: "fa-solid fa-monument"
+- name: "Museums"
+  icon: "fa-solid fa-building-columns"
+- name: "Religious buildings"
+  icon: "fa-solid fa-church"
+- name: "Ruins"
+  icon: "pt-icon pt-icon-ruins"
+- name: "Street art"
+  icon: "fa-solid fa-spray-can"
+- name: "Trails"
+  icon: "fa-solid fa-person-hiking"

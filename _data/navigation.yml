@@ -1,0 +1,9 @@
+# Top navigation for Minimal Mistakes.
+# Replace the existing main: block in your _data/navigation.yml with this.
+main:
+  - title: "Cities"
+    url: /cities/
+  - title: "Subjects"
+    url: /subjects/
+  - title: "About"
+    url: /about/
