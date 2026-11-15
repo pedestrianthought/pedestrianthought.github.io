@@ -5,5 +5,3 @@ permalink: /subjects/street-art/
 filter_field: subjects
 filter_value: "Street art"
 ---
-
-Murals, stencils and paste-ups, and the neighbourhoods that give them room.
